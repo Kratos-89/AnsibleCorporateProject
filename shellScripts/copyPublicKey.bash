@@ -3,7 +3,7 @@
 PEM_FILE="client-key.pem"
 PUB_KEY=$(cat ~/.ssh/id_rsa.pub)
 USER="ubuntu"
-INVENTORY_FILE="./AnsibleCorporateProject/inventory/aws.yaml"
+INVENTORY_FILE="./inventory/aws.yaml"
 
 HOSTS=$(ansible-inventory -i $INVENTORY_FILE | jq -r '._meta.hostvars | keys[]')
 
