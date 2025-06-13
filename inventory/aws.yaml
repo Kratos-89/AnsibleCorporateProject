@@ -1,0 +1,11 @@
+plugin: amazon.aws.aws.ec2
+regions:
+  - ap-south-2
+filters:
+  tag:Environment: Testing
+  instance-state-name: running
+compose:
+  ansible_host: public_ip_address
+keyed_groups:
+  - key: tags.environment
+    prefix: Env
