@@ -1,11 +1,14 @@
-plugin: amazon.aws.aws.ec2
+plugin: amazon.aws.aws_ec2
 regions:
-  - ap-south-2
+  - us-east-1
 filters:
   tag:Environment: Testing
   instance-state-name: running
 compose:
   ansible_host: public_ip_address
+  ansible_user: ubuntu
 keyed_groups:
-  - key: tags.environment
+  - key: tags.name
+    prefix: name
+  - key: tags.Environment
     prefix: Env

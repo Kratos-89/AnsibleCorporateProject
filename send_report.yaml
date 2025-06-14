@@ -1,6 +1,5 @@
 - name: Email Report
   hosts: localhost
-  become: true
   gather_facts: true
   vars:
     collected_metrics: >-
@@ -11,8 +10,8 @@
         map(attribute='value.vm_metrics') |
         list
       }}
-      timestamp: "{{ ansible_date_time.date }} {{ ansible_date_time.time }}"
-      subject_line: "📊 VM Report – {{ ansible_date_time.date }} {{ ansible_date_time.hour }}:{{ ansible_date_time.minute }}"
+    timestamp: "{{ ansible_date_time.date }} {{ ansible_date_time.time }}"
+    subject_line: "📊 VM Report – {{ ansible_date_time.date }} {{ ansible_date_time.hour }}:{{ ansible_date_time.minute }}"
   tasks:
     - name: Send Animated HTML Based report.
       mail:
@@ -21,6 +20,6 @@
         username: "{{ email_user }}"
         password: "{{ email_pass }}"
         to: "{{ alert_recipient }}"
-        subject: "{{ suject_line }}"
+        subject: "{{ subject_line }}"
         body: "{{ lookup('template', 'templates/report-email.html.j2') }}"
         subtype: html

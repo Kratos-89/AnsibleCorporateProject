@@ -2,6 +2,8 @@
   hosts: Env_Testing
   become: true
   gather_facts: true
+  vars:
+    ansible_user: ubuntu
   tasks:
     - name: Install systat(for mpstat)
       apt:
@@ -13,7 +15,7 @@
       yum:
         name: sysstat
         state: present
-      when: anisble_os_family=="RedHat"
+      when: ansible_os_family=="RedHat"
 
     - name: Get CPU Usage of the current machine
       shell: "mpstat 1 1 | awk '/Average/ && $NF ~ /[0-9.]+/ {print 100 - $NF}'"
@@ -28,9 +30,9 @@
       register: disk_usage
 
     - name: Set Metrices Fact
-      set_facts:
+      set_fact:
         vm_metrics:
-          hostName: "{{ inventory_hostname }}"
+          hostname: "{{ inventory_hostname }}"
           cpu: "{{ cpu_usage.stdout | float | round(2) }}"
           mem: "{{ mem_usage.stdout | float | round(2) }}"
           disk: "{{ disk_usage.stdout | float | round(2) }}"
