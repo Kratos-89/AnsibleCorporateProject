@@ -6,6 +6,10 @@ An automated solution that monitors your VM fleet's vital health metrics and del
 ![AWS Integration](https://img.shields.io/badge/AWS-Integration-orange)
 ![Email Reports](https://img.shields.io/badge/Email-Reports-blue)
 
+### 🖼️ Architecture Diagram
+
+![Architecture Diagram](images/IMG_20250817_143459.jpg)
+
 ## 🌟 Key Features
 
 - **Dynamic VM Discovery**: Automatically finds AWS EC2 instances using tags
@@ -186,9 +190,9 @@ The AWS EC2 dynamic inventory (`inventory/aws_ec2.yaml`) provides:
 ```yaml
 plugin: amazon.aws.aws_ec2
 regions:
-  - ap-south-1  # Update with your preferred region
+  - ap-south-1 # Update with your preferred region
 filters:
-  tag:Environment: Testing  # Filter by this tag
+  tag:Environment: Testing # Filter by this tag
   instance-state-name: running
 compose:
   ansible_host: public_ip_address
@@ -200,6 +204,7 @@ keyed_groups:
 ```
 
 This configuration:
+
 - **Discovers Instances**: Automatically finds matching EC2 VMs
 - **Filters**: Only includes running instances with specific tags
 - **Groups Creation**: Organizes instances by Name and Environment tags
