@@ -30,7 +30,7 @@
     - name: Set Metrices Fact
       set_fact:
         vm_metrics:
-          hostname: "{{ inventory_hostname }}"
+          hostname: "{{ inventory_hostname }}" #hostaname like ec2-xx-xx-xx-xx.compute-1.amazonaws.com
           cpu: "{{ cpu_usage.stdout | float }}"
           mem: "{{ mem_usage.stdout | float }}"
           disk: "{{ disk_usage.stdout | float }}"

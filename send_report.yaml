@@ -1,6 +1,7 @@
 - name: Email Report
   hosts: localhost
   gather_facts: true
+  #hostvars['instance-ip-or-id'].vm_metrics.
   vars:
     collected_metrics: >-
       {{
