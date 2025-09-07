@@ -3,3 +3,4 @@ smtp_port: 587
 email_user: ""
 email_pass: ""
 alert_recipient: ""
+ansible_user: "ubuntu"

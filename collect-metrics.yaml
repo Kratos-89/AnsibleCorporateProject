@@ -2,8 +2,6 @@
   hosts: Env_Testing
   become: true
   gather_facts: true
-  vars:
-    ansible_user: ubuntu
   tasks:
     - name: Install systat(for mpstat)
       apt:
@@ -18,21 +16,21 @@
       when: ansible_os_family=="RedHat"
 
     - name: Get CPU Usage of the current machine
-      shell: "mpstat 1 1 | awk '/Average/ && $NF ~ /[0-9.]+/ {print 100 - $NF}'"
+      shell: "mpstat 1 1 | awk '/Average/ && $NF ~ /[0-9.]+/ {printf(\"%.2f\n\", 100 - $NF)}'"
       register: cpu_usage
 
     - name: Get Memory Usage
-      shell: free | awk '/Mem/{printf("%.2f", $3/$2 * 100.0)}'
+      shell: "free | awk '/Mem/{printf(\"%.2f\n\", $3/$2 * 100.0)}'"
       register: mem_usage
 
     - name: Get Disk Usage
-      shell: "df / | awk 'NR==2 {print $5}' | tr -d '%'"
+      shell: "df / | awk 'NR==2 {printf(\"%.2f\n\", $5)}' | tr -d '%'"
       register: disk_usage
 
     - name: Set Metrices Fact
       set_fact:
         vm_metrics:
           hostname: "{{ inventory_hostname }}"
-          cpu: "{{ cpu_usage.stdout | float | round(2) }}"
-          mem: "{{ mem_usage.stdout | float | round(2) }}"
-          disk: "{{ disk_usage.stdout | float | round(2) }}"
+          cpu: "{{ cpu_usage.stdout | float }}"
+          mem: "{{ mem_usage.stdout | float }}"
+          disk: "{{ disk_usage.stdout | float }}"
